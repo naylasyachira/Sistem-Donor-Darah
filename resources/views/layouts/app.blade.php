@@ -205,6 +205,13 @@
                     <span>Master Pendonor</span>
                 </a>
             </li>
+
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('screenings.*') ? '' : 'collapsed' }}" href="{{ route('screenings.index') }}">
+                    <i class="bi bi-heart-pulse"></i>
+                    <span>Screening Kesehatan</span>
+                </a>
+            </li>
             @endif
         </ul>
     </aside>

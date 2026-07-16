@@ -12,5 +12,8 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 ])]
 class Donor extends Model
 {
-    //
+    public function screenings()
+    {
+        return $this->hasMany(Screening::class);
+    }
 }

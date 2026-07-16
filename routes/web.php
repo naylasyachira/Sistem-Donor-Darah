@@ -70,6 +70,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('users', \App\Http\Controllers\UserController::class);
     Route::resource('donors', \App\Http\Controllers\DonorController::class)->middleware('role:admin,petugas');
+    Route::resource('screenings', \App\Http\Controllers\ScreeningController::class)->middleware('role:admin,petugas');
 
     Route::get('/profile', function () {
         return view('profile.index');
