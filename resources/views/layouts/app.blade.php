@@ -148,10 +148,7 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile" style="min-width: 240px;">
                         @php
-                            $roleName = 'User';
-                            if(Str::contains(auth()->user()->email, 'admin')) $roleName = 'Administrator';
-                            elseif(Str::contains(auth()->user()->email, 'petugas')) $roleName = 'Petugas PMI';
-                            elseif(Str::contains(auth()->user()->email, 'rs')) $roleName = 'Rumah Sakit';
+                            $roleName = auth()->user()->role ? auth()->user()->role->display_name : 'User';
                         @endphp
                         <li class="dropdown-header text-center py-2">
                             <h6 class="mb-1 fw-bold">{{ auth()->user()->name }}</h6>
@@ -188,18 +185,20 @@
     <aside id="sidebar" class="sidebar">
         <ul class="sidebar-nav" id="sidebar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('dashboard') }}">
+                <a class="nav-link {{ request()->routeIs('dashboard') ? '' : 'collapsed' }}" href="{{ route('dashboard') }}">
                     <i class="bi bi-grid"></i>
                     <span>Dashboard</span>
                 </a>
             </li>
-            <!-- Dummy Items -->
+            <!-- Admin & Petugas Items -->
+            @if(auth()->user()->hasRole(['admin', 'petugas']))
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{ route('users.index') }}">
+                <a class="nav-link {{ request()->routeIs('users.*') ? '' : 'collapsed' }}" href="{{ route('users.index') }}">
                     <i class="bi bi-person"></i>
                     <span>User Management</span>
                 </a>
             </li>
+            @endif
         </ul>
     </aside>
     @endauth

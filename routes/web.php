@@ -45,9 +45,7 @@ Route::middleware('auth')->group(function () {
         return view('dashboard.index');
     })->name('dashboard');
 
-    Route::get('/users', function () {
-        return 'Halaman User Management (Fitur belum tersedia)';
-    })->name('users.index');
+    Route::resource('users', \App\Http\Controllers\UserController::class);
 
     Route::get('/profile', function () {
         return view('profile.index');
