@@ -219,6 +219,13 @@
                     <span>Donor Darah</span>
                 </a>
             </li>
+
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('blood-stocks.*') ? '' : 'collapsed' }}" href="{{ route('blood-stocks.index') }}">
+                    <i class="bi bi-droplet"></i>
+                    <span>Manajemen Stok Darah</span>
+                </a>
+            </li>
             @endif
         </ul>
     </aside>

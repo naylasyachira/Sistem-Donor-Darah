@@ -7,6 +7,8 @@ use App\Models\Donor;
 use App\Models\Screening;
 use Illuminate\Http\Request;
 
+use App\Models\BloodStock;
+
 class DonationController extends Controller
 {
     public function index(Request $request)
@@ -95,7 +97,7 @@ class DonationController extends Controller
 
         $donor = Donor::find($request->donor_id);
 
-        Donation::create([
+        $donation = Donation::create([
             'donation_code' => $donationCode,
             'donor_id' => $request->donor_id,
             'screening_id' => $request->screening_id,
@@ -107,6 +109,10 @@ class DonationController extends Controller
             'status' => $request->status,
             'notes' => $request->notes,
         ]);
+
+        if ($donation->status === 'Berhasil') {
+            $this->addBloodStock($donation->blood_type, $donation->rhesus, $donation->blood_volume);
+        }
 
         return redirect()->route('donations.index')->with('success', 'Data donor berhasil disimpan.');
     }
@@ -164,6 +170,7 @@ class DonationController extends Controller
         $request->validate($rules, $messages);
 
         $donor = Donor::find($request->donor_id);
+        $oldStatus = $donation->status;
 
         $donation->update([
             'donor_id' => $request->donor_id,
@@ -175,6 +182,10 @@ class DonationController extends Controller
             'notes' => $request->notes,
         ]);
 
+        if ($oldStatus !== 'Berhasil' && $donation->status === 'Berhasil') {
+            $this->addBloodStock($donation->blood_type, $donation->rhesus, $donation->blood_volume);
+        }
+
         return redirect()->route('donations.index')->with('success', 'Data donor berhasil diubah.');
     }
 
@@ -185,5 +196,26 @@ class DonationController extends Controller
         $donation->delete();
         
         return redirect()->route('donations.index')->with('success', 'Data donor berhasil dihapus.');
+    }
+
+    private function addBloodStock($bloodType, $rhesus, $volume)
+    {
+        $stock = BloodStock::where('blood_type', $bloodType)
+            ->where('rhesus', $rhesus)
+            ->first();
+
+        if ($stock) {
+            $stock->increment('quantity_bag');
+            $stock->increment('total_volume_ml', $volume);
+            $stock->update(['last_update' => now()]);
+        } else {
+            BloodStock::create([
+                'blood_type' => $bloodType,
+                'rhesus' => $rhesus,
+                'quantity_bag' => 1,
+                'total_volume_ml' => $volume,
+                'last_update' => now(),
+            ]);
+        }
     }
 }
