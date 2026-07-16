@@ -9,7 +9,7 @@ class BloodStockController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(!auth()->user()->hasRole(['admin', 'petugas']), 403, 'Anda tidak memiliki hak akses ke modul ini.');
+        abort_if(!auth()->user()->hasRole(['admin', 'petugas', 'rs', 'rumah_sakit']), 403, 'Anda tidak memiliki hak akses ke modul ini.');
         
         $search = $request->query('search');
         $blood_type = $request->query('blood_type');
@@ -44,7 +44,7 @@ class BloodStockController extends Controller
 
     public function show(BloodStock $bloodStock)
     {
-        abort_if(!auth()->user()->hasRole(['admin', 'petugas']), 403, 'Anda tidak memiliki hak akses ke modul ini.');
+        abort_if(!auth()->user()->hasRole(['admin', 'petugas', 'rs', 'rumah_sakit']), 403, 'Anda tidak memiliki hak akses ke modul ini.');
 
         // Fetch history of donations that contributed to this blood stock
         $history = \App\Models\Donation::with('donor')

@@ -58,21 +58,22 @@ Route::middleware('auth')->group(function () {
             $stats['total_pendonor'] = \App\Models\Donor::count();
             $stats['pendonor_hari_ini'] = \App\Models\Donor::whereDate('created_at', \Carbon\Carbon::today())->count();
             $stats['pendonor_aktif'] = \App\Models\Donor::where('status', 'aktif')->count();
-        } elseif ($user->hasRole('rumah_sakit')) {
-            $stats['total_permintaan'] = 0;
-            $stats['permintaan_diproses'] = 0;
-            $stats['permintaan_disetujui'] = 0;
-            $stats['permintaan_ditolak'] = 0;
+        } elseif ($user->hasRole(['rs', 'rumah_sakit'])) {
+            $stats['total_golongan_tersedia'] = \App\Models\BloodStock::where('quantity_bag', '>', 0)->distinct('blood_type')->count('blood_type');
+            $stats['total_kantong'] = \App\Models\BloodStock::sum('quantity_bag');
+            $stats['total_volume'] = \App\Models\BloodStock::sum('total_volume_ml');
+            $stats['terakhir_diperbarui'] = \App\Models\BloodStock::max('last_update');
         }
 
         return view('dashboard.index', compact('stats'));
     })->name('dashboard');
 
     Route::resource('users', \App\Http\Controllers\UserController::class);
-    Route::resource('donors', \App\Http\Controllers\DonorController::class)->middleware('role:admin,petugas');
-    Route::resource('screenings', \App\Http\Controllers\ScreeningController::class)->middleware('role:admin,petugas');
-    Route::resource('donations', \App\Http\Controllers\DonationController::class)->middleware('role:admin,petugas');
-    Route::resource('blood-stocks', \App\Http\Controllers\BloodStockController::class)->middleware('role:admin,petugas');
+    Route::resource('donors', \App\Http\Controllers\DonorController::class)->middleware('role:admin,petugas,rumah_sakit');
+    Route::resource('screenings', \App\Http\Controllers\ScreeningController::class)->middleware('role:admin,petugas,rumah_sakit');
+    Route::resource('donations', \App\Http\Controllers\DonationController::class)->middleware('role:admin,petugas,rumah_sakit');
+    Route::resource('blood-stocks', \App\Http\Controllers\BloodStockController::class)->middleware('role:admin,petugas,rumah_sakit');
+    Route::resource('hospitals', \App\Http\Controllers\HospitalController::class)->middleware('role:admin,petugas,rumah_sakit');
 
     Route::get('/profile', function () {
         return view('profile.index');
@@ -81,6 +82,30 @@ Route::middleware('auth')->group(function () {
     Route::get('/settings', function () {
         return view('profile.settings');
     })->name('settings');
+
+    Route::post('/settings/profile', function (Request $request) {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . Auth::id(),
+            'profile_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+        ]);
+
+        $user = Auth::user();
+        $user->name = $request->name;
+        $user->email = $request->email;
+
+        if ($request->hasFile('profile_photo')) {
+            if ($user->profile_photo_path) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($user->profile_photo_path);
+            }
+            $path = $request->file('profile_photo')->store('profile_photos', 'public');
+            $user->profile_photo_path = $path;
+        }
+
+        $user->save();
+
+        return back()->with('success', 'Profil berhasil diperbarui.');
+    })->name('settings.profile.update');
 
     Route::post('/settings', function (Request $request) {
         $request->validate([

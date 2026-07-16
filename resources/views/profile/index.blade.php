@@ -16,7 +16,11 @@
         <div class="col-xl-4">
             <div class="card border-0 shadow-sm rounded-3">
                 <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-                    <img src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name) }}&background=F8D7DA&color=DC3545&size=120" alt="Profile" class="rounded-circle mb-3 shadow-sm">
+                    @if(auth()->user()->profile_photo_path)
+                        <img src="{{ asset('storage/' . auth()->user()->profile_photo_path) }}" alt="Profile" class="rounded-circle mb-3 shadow-sm" width="120" height="120" style="object-fit: cover;">
+                    @else
+                        <img src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name) }}&background=F8D7DA&color=DC3545&size=120" alt="Profile" class="rounded-circle mb-3 shadow-sm">
+                    @endif
                     <h2 class="fs-4 fw-bold" style="color: #012970;">{{ auth()->user()->name }}</h2>
                     @php
                         $roleName = 'User';

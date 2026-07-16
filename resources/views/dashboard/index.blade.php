@@ -180,70 +180,73 @@
                 </div>
             </div>
 
-        @elseif(auth()->user()->hasRole('rumah_sakit'))
+        @elseif(auth()->user()->hasRole('rs') || auth()->user()->hasRole('rumah_sakit'))
             
-            <!-- Total Permintaan Darah -->
+            <!-- Total Golongan Darah -->
             <div class="col-xxl-3 col-md-6 mb-4">
-                <div class="card info-card border-0 shadow-sm rounded-3 h-100">
+                <div class="card info-card customers-card border-0 shadow-sm rounded-3 h-100">
                     <div class="card-body p-4">
-                        <h5 class="card-title text-muted text-uppercase fs-6 mb-3">Total Permintaan</h5>
-                        <div class="d-flex align-items-center">
-                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-primary bg-opacity-10 me-3" style="width: 50px; height: 50px;">
-                                <i class="bi bi-droplet-half text-primary fs-3"></i>
-                            </div>
-                            <div class="ps-2">
-                                <h6 class="fs-3 fw-bold mb-0">{{ number_format($stats['total_permintaan']) }}</h6>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Permintaan Diproses -->
-            <div class="col-xxl-3 col-md-6 mb-4">
-                <div class="card info-card border-0 shadow-sm rounded-3 h-100">
-                    <div class="card-body p-4">
-                        <h5 class="card-title text-muted text-uppercase fs-6 mb-3">Diproses</h5>
-                        <div class="d-flex align-items-center">
-                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-warning bg-opacity-10 me-3" style="width: 50px; height: 50px;">
-                                <i class="bi bi-hourglass-split text-warning fs-3"></i>
-                            </div>
-                            <div class="ps-2">
-                                <h6 class="fs-3 fw-bold mb-0">{{ number_format($stats['permintaan_diproses']) }}</h6>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Permintaan Disetujui -->
-            <div class="col-xxl-3 col-md-6 mb-4">
-                <div class="card info-card border-0 shadow-sm rounded-3 h-100">
-                    <div class="card-body p-4">
-                        <h5 class="card-title text-muted text-uppercase fs-6 mb-3">Disetujui</h5>
+                        <h5 class="card-title text-muted text-uppercase fs-6 mb-3">Total Golongan Tersedia</h5>
                         <div class="d-flex align-items-center">
                             <div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-success bg-opacity-10 me-3" style="width: 50px; height: 50px;">
-                                <i class="bi bi-check-circle text-success fs-3"></i>
+                                <i class="bi bi-layers text-success fs-3"></i>
                             </div>
                             <div class="ps-2">
-                                <h6 class="fs-3 fw-bold mb-0">{{ number_format($stats['permintaan_disetujui']) }}</h6>
+                                <h6 class="fs-3 fw-bold mb-0">{{ number_format($stats['total_golongan_tersedia'] ?? 0) }}</h6>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Permintaan Ditolak -->
+            <!-- Total Kantong Darah -->
             <div class="col-xxl-3 col-md-6 mb-4">
                 <div class="card info-card border-0 shadow-sm rounded-3 h-100">
                     <div class="card-body p-4">
-                        <h5 class="card-title text-muted text-uppercase fs-6 mb-3">Ditolak</h5>
+                        <h5 class="card-title text-muted text-uppercase fs-6 mb-3">Total Kantong Darah</h5>
                         <div class="d-flex align-items-center">
                             <div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-danger bg-opacity-10 me-3" style="width: 50px; height: 50px;">
-                                <i class="bi bi-x-circle text-danger fs-3"></i>
+                                <i class="bi bi-droplet text-danger fs-3"></i>
                             </div>
                             <div class="ps-2">
-                                <h6 class="fs-3 fw-bold mb-0">{{ number_format($stats['permintaan_ditolak']) }}</h6>
+                                <h6 class="fs-3 fw-bold mb-0">{{ number_format($stats['total_kantong'] ?? 0) }}</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total Volume Darah -->
+            <div class="col-xxl-3 col-md-6 mb-4">
+                <div class="card info-card border-0 shadow-sm rounded-3 h-100">
+                    <div class="card-body p-4">
+                        <h5 class="card-title text-muted text-uppercase fs-6 mb-3">Total Volume Darah</h5>
+                        <div class="d-flex align-items-center">
+                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-info bg-opacity-10 me-3" style="width: 50px; height: 50px;">
+                                <i class="bi bi-water text-info fs-3"></i>
+                            </div>
+                            <div class="ps-2">
+                                <h6 class="fs-3 fw-bold mb-0">{{ number_format($stats['total_volume'] ?? 0) }}</h6>
+                                <span class="text-muted small">ml</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Terakhir Diperbarui -->
+            <div class="col-xxl-3 col-md-6 mb-4">
+                <div class="card info-card border-0 shadow-sm rounded-3 h-100">
+                    <div class="card-body p-4">
+                        <h5 class="card-title text-muted text-uppercase fs-6 mb-3">Update Terakhir</h5>
+                        <div class="d-flex align-items-center">
+                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-secondary bg-opacity-10 me-3" style="width: 50px; height: 50px;">
+                                <i class="bi bi-clock-history text-secondary fs-3"></i>
+                            </div>
+                            <div class="ps-2">
+                                <h6 class="fs-5 fw-bold mb-0" style="color: #012970;">
+                                    {{ isset($stats['terakhir_diperbarui']) && $stats['terakhir_diperbarui'] ? \Carbon\Carbon::parse($stats['terakhir_diperbarui'])->translatedFormat('d M') : '-' }}
+                                </h6>
                             </div>
                         </div>
                     </div>

@@ -2,11 +2,17 @@
 
 @section('content')
 <div class="pagetitle mb-4">
-    <h1 class="fs-3 fw-bold" style="color: #012970;">Manajemen Stok Darah</h1>
+    @if(auth()->user()->hasRole(['rs', 'rumah_sakit']))
+        <h1 class="fs-3 fw-bold" style="color: #012970;">Lihat Stok Darah</h1>
+    @else
+        <h1 class="fs-3 fw-bold" style="color: #012970;">Manajemen Stok Darah</h1>
+    @endif
     <nav>
         <ol class="breadcrumb mt-1">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}" class="text-decoration-none">Dashboard</a></li>
-            <li class="breadcrumb-item active">Manajemen Stok Darah</li>
+            <li class="breadcrumb-item active">
+                {{ auth()->user()->hasRole(['rs', 'rumah_sakit']) ? 'Lihat Stok Darah' : 'Manajemen Stok Darah' }}
+            </li>
         </ol>
     </nav>
 </div>
