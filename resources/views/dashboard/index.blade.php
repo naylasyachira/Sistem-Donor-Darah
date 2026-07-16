@@ -24,77 +24,233 @@
     </div>
     
     <div class="row">
-        <!-- Sales Card -->
-        <div class="col-xxl-3 col-md-6 mb-4">
-            <div class="card info-card sales-card border-0 shadow-sm rounded-3 h-100">
-                <div class="card-body p-4">
-                    <h5 class="card-title text-muted text-uppercase fs-6 mb-3">Total Donors</h5>
-                    <div class="d-flex align-items-center">
-                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-primary bg-opacity-10 me-3" style="width: 50px; height: 50px;">
-                            <i class="bi bi-people text-primary fs-3"></i>
-                        </div>
-                        <div class="ps-2">
-                            <h6 class="fs-3 fw-bold mb-0">145</h6>
-                            <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>
+        @if(auth()->user()->hasRole('admin'))
+            <!-- Total Pendonor -->
+            <div class="col-xxl-4 col-md-6 mb-4">
+                <div class="card info-card sales-card border-0 shadow-sm rounded-3 h-100">
+                    <div class="card-body p-4">
+                        <h5 class="card-title text-muted text-uppercase fs-6 mb-3">Total Pendonor</h5>
+                        <div class="d-flex align-items-center">
+                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-primary bg-opacity-10 me-3" style="width: 50px; height: 50px;">
+                                <i class="bi bi-people text-primary fs-3"></i>
+                            </div>
+                            <div class="ps-2">
+                                <h6 class="fs-3 fw-bold mb-0">{{ number_format($stats['total_pendonor']) }}</h6>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Revenue Card -->
-        <div class="col-xxl-3 col-md-6 mb-4">
-            <div class="card info-card revenue-card border-0 shadow-sm rounded-3 h-100">
-                <div class="card-body p-4">
-                    <h5 class="card-title text-muted text-uppercase fs-6 mb-3">Blood Stock</h5>
-                    <div class="d-flex align-items-center">
-                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-danger bg-opacity-10 me-3" style="width: 50px; height: 50px;">
-                            <i class="bi bi-droplet text-danger fs-3"></i>
-                        </div>
-                        <div class="ps-2">
-                            <h6 class="fs-3 fw-bold mb-0">3,264</h6>
-                            <span class="text-success small pt-1 fw-bold">8%</span> <span class="text-muted small pt-2 ps-1">increase</span>
+            <!-- Total User -->
+            <div class="col-xxl-4 col-md-6 mb-4">
+                <div class="card info-card revenue-card border-0 shadow-sm rounded-3 h-100">
+                    <div class="card-body p-4">
+                        <h5 class="card-title text-muted text-uppercase fs-6 mb-3">Total User</h5>
+                        <div class="d-flex align-items-center">
+                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-success bg-opacity-10 me-3" style="width: 50px; height: 50px;">
+                                <i class="bi bi-person-badge text-success fs-3"></i>
+                            </div>
+                            <div class="ps-2">
+                                <h6 class="fs-3 fw-bold mb-0">{{ number_format($stats['total_user']) }}</h6>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Customers Card -->
-        <div class="col-xxl-3 col-md-6 mb-4">
-            <div class="card info-card customers-card border-0 shadow-sm rounded-3 h-100">
-                <div class="card-body p-4">
-                    <h5 class="card-title text-muted text-uppercase fs-6 mb-3">Hospitals</h5>
-                    <div class="d-flex align-items-center">
-                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-warning bg-opacity-10 me-3" style="width: 50px; height: 50px;">
-                            <i class="bi bi-building text-warning fs-3"></i>
-                        </div>
-                        <div class="ps-2">
-                            <h6 class="fs-3 fw-bold mb-0">12</h6>
-                            <span class="text-danger small pt-1 fw-bold">1%</span> <span class="text-muted small pt-2 ps-1">decrease</span>
+            <!-- Total Rumah Sakit -->
+            <div class="col-xxl-4 col-md-6 mb-4">
+                <div class="card info-card customers-card border-0 shadow-sm rounded-3 h-100">
+                    <div class="card-body p-4">
+                        <h5 class="card-title text-muted text-uppercase fs-6 mb-3">Total Rumah Sakit</h5>
+                        <div class="d-flex align-items-center">
+                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-warning bg-opacity-10 me-3" style="width: 50px; height: 50px;">
+                                <i class="bi bi-building text-warning fs-3"></i>
+                            </div>
+                            <div class="ps-2">
+                                <h6 class="fs-3 fw-bold mb-0">{{ number_format($stats['total_rumah_sakit']) }}</h6>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Distributions Card -->
-        <div class="col-xxl-3 col-md-6 mb-4">
-            <div class="card info-card distributions-card border-0 shadow-sm rounded-3 h-100">
-                <div class="card-body p-4">
-                    <h5 class="card-title text-muted text-uppercase fs-6 mb-3">Distributions</h5>
-                    <div class="d-flex align-items-center">
-                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-info bg-opacity-10 me-3" style="width: 50px; height: 50px;">
-                            <i class="bi bi-truck text-info fs-3"></i>
-                        </div>
-                        <div class="ps-2">
-                            <h6 class="fs-3 fw-bold mb-0">84</h6>
-                            <span class="text-success small pt-1 fw-bold">5%</span> <span class="text-muted small pt-2 ps-1">increase</span>
+            <!-- Pendonor Aktif -->
+            <div class="col-xxl-4 col-md-6 mb-4">
+                <div class="card info-card border-0 shadow-sm rounded-3 h-100">
+                    <div class="card-body p-4">
+                        <h5 class="card-title text-muted text-uppercase fs-6 mb-3">Pendonor Aktif</h5>
+                        <div class="d-flex align-items-center">
+                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-info bg-opacity-10 me-3" style="width: 50px; height: 50px;">
+                                <i class="bi bi-activity text-info fs-3"></i>
+                            </div>
+                            <div class="ps-2">
+                                <h6 class="fs-3 fw-bold mb-0">{{ number_format($stats['pendonor_aktif']) }}</h6>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+
+            <!-- Pendonor Laki-laki -->
+            <div class="col-xxl-4 col-md-6 mb-4">
+                <div class="card info-card border-0 shadow-sm rounded-3 h-100">
+                    <div class="card-body p-4">
+                        <h5 class="card-title text-muted text-uppercase fs-6 mb-3">Pendonor Laki-laki</h5>
+                        <div class="d-flex align-items-center">
+                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-secondary bg-opacity-10 me-3" style="width: 50px; height: 50px;">
+                                <i class="bi bi-gender-male text-secondary fs-3"></i>
+                            </div>
+                            <div class="ps-2">
+                                <h6 class="fs-3 fw-bold mb-0">{{ number_format($stats['pendonor_laki']) }}</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pendonor Perempuan -->
+            <div class="col-xxl-4 col-md-6 mb-4">
+                <div class="card info-card border-0 shadow-sm rounded-3 h-100">
+                    <div class="card-body p-4">
+                        <h5 class="card-title text-muted text-uppercase fs-6 mb-3">Pendonor Perempuan</h5>
+                        <div class="d-flex align-items-center">
+                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-danger bg-opacity-10 me-3" style="width: 50px; height: 50px;">
+                                <i class="bi bi-gender-female text-danger fs-3"></i>
+                            </div>
+                            <div class="ps-2">
+                                <h6 class="fs-3 fw-bold mb-0">{{ number_format($stats['pendonor_perempuan']) }}</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        @elseif(auth()->user()->hasRole('petugas'))
+            
+            <!-- Total Pendonor -->
+            <div class="col-xxl-4 col-md-6 mb-4">
+                <div class="card info-card sales-card border-0 shadow-sm rounded-3 h-100">
+                    <div class="card-body p-4">
+                        <h5 class="card-title text-muted text-uppercase fs-6 mb-3">Total Pendonor</h5>
+                        <div class="d-flex align-items-center">
+                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-primary bg-opacity-10 me-3" style="width: 50px; height: 50px;">
+                                <i class="bi bi-people text-primary fs-3"></i>
+                            </div>
+                            <div class="ps-2">
+                                <h6 class="fs-3 fw-bold mb-0">{{ number_format($stats['total_pendonor']) }}</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pendonor Hari Ini -->
+            <div class="col-xxl-4 col-md-6 mb-4">
+                <div class="card info-card revenue-card border-0 shadow-sm rounded-3 h-100">
+                    <div class="card-body p-4">
+                        <h5 class="card-title text-muted text-uppercase fs-6 mb-3">Pendonor Hari Ini</h5>
+                        <div class="d-flex align-items-center">
+                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-success bg-opacity-10 me-3" style="width: 50px; height: 50px;">
+                                <i class="bi bi-calendar-check text-success fs-3"></i>
+                            </div>
+                            <div class="ps-2">
+                                <h6 class="fs-3 fw-bold mb-0">{{ number_format($stats['pendonor_hari_ini']) }}</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pendonor Aktif -->
+            <div class="col-xxl-4 col-md-6 mb-4">
+                <div class="card info-card customers-card border-0 shadow-sm rounded-3 h-100">
+                    <div class="card-body p-4">
+                        <h5 class="card-title text-muted text-uppercase fs-6 mb-3">Pendonor Aktif</h5>
+                        <div class="d-flex align-items-center">
+                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-info bg-opacity-10 me-3" style="width: 50px; height: 50px;">
+                                <i class="bi bi-activity text-info fs-3"></i>
+                            </div>
+                            <div class="ps-2">
+                                <h6 class="fs-3 fw-bold mb-0">{{ number_format($stats['pendonor_aktif']) }}</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        @elseif(auth()->user()->hasRole('rumah_sakit'))
+            
+            <!-- Total Permintaan Darah -->
+            <div class="col-xxl-3 col-md-6 mb-4">
+                <div class="card info-card border-0 shadow-sm rounded-3 h-100">
+                    <div class="card-body p-4">
+                        <h5 class="card-title text-muted text-uppercase fs-6 mb-3">Total Permintaan</h5>
+                        <div class="d-flex align-items-center">
+                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-primary bg-opacity-10 me-3" style="width: 50px; height: 50px;">
+                                <i class="bi bi-droplet-half text-primary fs-3"></i>
+                            </div>
+                            <div class="ps-2">
+                                <h6 class="fs-3 fw-bold mb-0">{{ number_format($stats['total_permintaan']) }}</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Permintaan Diproses -->
+            <div class="col-xxl-3 col-md-6 mb-4">
+                <div class="card info-card border-0 shadow-sm rounded-3 h-100">
+                    <div class="card-body p-4">
+                        <h5 class="card-title text-muted text-uppercase fs-6 mb-3">Diproses</h5>
+                        <div class="d-flex align-items-center">
+                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-warning bg-opacity-10 me-3" style="width: 50px; height: 50px;">
+                                <i class="bi bi-hourglass-split text-warning fs-3"></i>
+                            </div>
+                            <div class="ps-2">
+                                <h6 class="fs-3 fw-bold mb-0">{{ number_format($stats['permintaan_diproses']) }}</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Permintaan Disetujui -->
+            <div class="col-xxl-3 col-md-6 mb-4">
+                <div class="card info-card border-0 shadow-sm rounded-3 h-100">
+                    <div class="card-body p-4">
+                        <h5 class="card-title text-muted text-uppercase fs-6 mb-3">Disetujui</h5>
+                        <div class="d-flex align-items-center">
+                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-success bg-opacity-10 me-3" style="width: 50px; height: 50px;">
+                                <i class="bi bi-check-circle text-success fs-3"></i>
+                            </div>
+                            <div class="ps-2">
+                                <h6 class="fs-3 fw-bold mb-0">{{ number_format($stats['permintaan_disetujui']) }}</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Permintaan Ditolak -->
+            <div class="col-xxl-3 col-md-6 mb-4">
+                <div class="card info-card border-0 shadow-sm rounded-3 h-100">
+                    <div class="card-body p-4">
+                        <h5 class="card-title text-muted text-uppercase fs-6 mb-3">Ditolak</h5>
+                        <div class="d-flex align-items-center">
+                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-danger bg-opacity-10 me-3" style="width: 50px; height: 50px;">
+                                <i class="bi bi-x-circle text-danger fs-3"></i>
+                            </div>
+                            <div class="ps-2">
+                                <h6 class="fs-3 fw-bold mb-0">{{ number_format($stats['permintaan_ditolak']) }}</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        @endif
     </div>
 </section>
 @endsection

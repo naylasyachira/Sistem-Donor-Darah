@@ -42,10 +42,34 @@ Route::middleware('auth')->group(function () {
     })->name('logout');
 
     Route::get('/dashboard', function () {
-        return view('dashboard.index');
+        $user = auth()->user();
+        $stats = [];
+        
+        if ($user->hasRole('admin')) {
+            $stats['total_pendonor'] = \App\Models\Donor::count();
+            $stats['total_user'] = \App\Models\User::count();
+            $stats['total_rumah_sakit'] = \App\Models\User::whereHas('role', function($q) {
+                $q->where('name', 'rumah_sakit');
+            })->count();
+            $stats['pendonor_aktif'] = \App\Models\Donor::where('status', 'aktif')->count();
+            $stats['pendonor_laki'] = \App\Models\Donor::where('jenis_kelamin', 'L')->count();
+            $stats['pendonor_perempuan'] = \App\Models\Donor::where('jenis_kelamin', 'P')->count();
+        } elseif ($user->hasRole('petugas')) {
+            $stats['total_pendonor'] = \App\Models\Donor::count();
+            $stats['pendonor_hari_ini'] = \App\Models\Donor::whereDate('created_at', \Carbon\Carbon::today())->count();
+            $stats['pendonor_aktif'] = \App\Models\Donor::where('status', 'aktif')->count();
+        } elseif ($user->hasRole('rumah_sakit')) {
+            $stats['total_permintaan'] = 0;
+            $stats['permintaan_diproses'] = 0;
+            $stats['permintaan_disetujui'] = 0;
+            $stats['permintaan_ditolak'] = 0;
+        }
+
+        return view('dashboard.index', compact('stats'));
     })->name('dashboard');
 
     Route::resource('users', \App\Http\Controllers\UserController::class);
+    Route::resource('donors', \App\Http\Controllers\DonorController::class)->middleware('role:admin,petugas');
 
     Route::get('/profile', function () {
         return view('profile.index');

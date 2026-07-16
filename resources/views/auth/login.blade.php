@@ -33,7 +33,12 @@
 
                                 <div class="col-12 mt-3">
                                     <label for="yourPassword" class="form-label">Password</label>
-                                    <input type="password" name="password" class="form-control" id="yourPassword" required>
+                                    <div class="input-group">
+                                        <input type="password" name="password" class="form-control" id="yourPassword" required>
+                                        <span class="input-group-text bg-white" id="togglePassword" style="cursor: pointer;">
+                                            <i class="bi bi-eye" id="eyeIcon"></i>
+                                        </span>
+                                    </div>
                                 </div>
 
                                 <div class="col-12 mt-3">
@@ -55,4 +60,27 @@
         </div>
     </section>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const togglePassword = document.querySelector("#togglePassword");
+        const password = document.querySelector("#yourPassword");
+        const eyeIcon = document.querySelector("#eyeIcon");
+
+        togglePassword.addEventListener("click", function () {
+            // Toggle the type attribute
+            const type = password.getAttribute("type") === "password" ? "text" : "password";
+            password.setAttribute("type", type);
+            
+            // Toggle the icon
+            if (type === "password") {
+                eyeIcon.classList.remove("bi-eye-slash");
+                eyeIcon.classList.add("bi-eye");
+            } else {
+                eyeIcon.classList.remove("bi-eye");
+                eyeIcon.classList.add("bi-eye-slash");
+            }
+        });
+    });
+</script>
 @endsection

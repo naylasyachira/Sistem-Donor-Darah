@@ -198,6 +198,13 @@
                     <span>User Management</span>
                 </a>
             </li>
+            
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('donors.*') ? '' : 'collapsed' }}" href="{{ route('donors.index') }}">
+                    <i class="bi bi-droplet-half"></i>
+                    <span>Master Pendonor</span>
+                </a>
+            </li>
             @endif
         </ul>
     </aside>
@@ -232,6 +239,8 @@
                 successTitle = 'Selamat Datang!';
             } else if (successMsg.includes('keluar')) {
                 successTitle = 'Sampai Jumpa!';
+            } else if (successMsg.includes('pendonor')) {
+                successTitle = 'Berhasil';
             }
 
             Swal.fire({
