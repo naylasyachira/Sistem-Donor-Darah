@@ -212,6 +212,13 @@
                     <span>Screening Kesehatan</span>
                 </a>
             </li>
+
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('donations.*') ? '' : 'collapsed' }}" href="{{ route('donations.index') }}">
+                    <i class="bi bi-droplet-half"></i>
+                    <span>Donor Darah</span>
+                </a>
+            </li>
             @endif
         </ul>
     </aside>

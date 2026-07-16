@@ -16,4 +16,9 @@ class Donor extends Model
     {
         return $this->hasMany(Screening::class);
     }
+
+    public function donations()
+    {
+        return $this->hasMany(Donation::class);
+    }
 }
