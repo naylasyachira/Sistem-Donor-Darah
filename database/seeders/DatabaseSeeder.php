@@ -15,11 +15,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        \App\Models\User::where('email', 'admin@redpulse.com')->update(['password' => \Illuminate\Support\Facades\Hash::make('admin123')]);
+        \App\Models\User::where('email', 'petugas1@redpulse.com')->update(['password' => \Illuminate\Support\Facades\Hash::make('petugas123')]);
+        \App\Models\User::where('email', 'petugas2@redpulse.com')->update(['password' => \Illuminate\Support\Facades\Hash::make('petugas123')]);
+        \App\Models\User::where('email', 'rs@redpulse.com')->update(['password' => \Illuminate\Support\Facades\Hash::make('rumahsakit123')]);
     }
 }
