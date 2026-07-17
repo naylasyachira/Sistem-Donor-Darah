@@ -140,7 +140,7 @@
         </div>
 
         <nav class="header-nav ms-auto pe-4">
-            <ul class="d-flex align-items-center m-0">
+            <ul class="d-flex align-items-center m-0 list-unstyled">
                 <li class="nav-item dropdown pe-3">
                     <a class="nav-link nav-profile d-flex align-items-center pe-0 text-decoration-none text-dark" role="button" style="cursor:pointer;" data-bs-toggle="dropdown">
                         @if(auth()->user()->profile_photo_path)
@@ -237,6 +237,26 @@
                     <span>Data Rumah Sakit</span>
                 </a>
             </li>
+
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('blood-requests.*') ? '' : 'collapsed' }}" href="{{ route('blood-requests.index') }}">
+                    <i class="bi bi-file-earmark-medical"></i>
+                    <span>Permintaan Darah</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('blood-distributions.*') ? '' : 'collapsed' }}" href="{{ route('blood-distributions.index') }}">
+                    <i class="bi bi-truck"></i>
+                    <span>Distribusi Darah</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('notifications.*') ? '' : 'collapsed' }}" href="{{ route('notifications.index') }}">
+                    <i class="bi bi-bell"></i>
+                    <span>Notifikasi</span>
+                </a>
+            </li>
             @endif
 
             @if(auth()->user()->hasRole(['rs', 'rumah_sakit']))
@@ -244,6 +264,26 @@
                 <a class="nav-link {{ request()->routeIs('blood-stocks.*') ? '' : 'collapsed' }}" href="{{ route('blood-stocks.index') }}">
                     <i class="bi bi-droplet"></i>
                     <span>Lihat Stok Darah</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('blood-requests.*') ? '' : 'collapsed' }}" href="{{ route('blood-requests.index') }}">
+                    <i class="bi bi-file-earmark-medical"></i>
+                    <span>Permintaan Darah</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('blood-distributions.*') ? '' : 'collapsed' }}" href="{{ route('blood-distributions.index') }}">
+                    <i class="bi bi-truck"></i>
+                    <span>Pelacakan Distribusi</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('notifications.*') ? '' : 'collapsed' }}" href="{{ route('notifications.index') }}">
+                    <i class="bi bi-bell"></i>
+                    <span>Notifikasi</span>
                 </a>
             </li>
             @endif

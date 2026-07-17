@@ -16,6 +16,15 @@ Route::middleware('guest')->group(function () {
     })->name('login');
 
     Route::post('/login', function (Request $request) {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
+        ], [
+            'email.required' => 'Email wajib diisi.',
+            'email.email' => 'Format email tidak valid.',
+            'password.required' => 'Password wajib diisi.'
+        ]);
+
         $credentials = $request->only('email', 'password');
         $remember = $request->has('remember');
 
@@ -28,7 +37,7 @@ Route::middleware('guest')->group(function () {
         }
 
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
+            'email' => 'Email atau password yang Anda masukkan salah.',
         ])->onlyInput('email');
     })->name('login.post');
 });
@@ -63,6 +72,19 @@ Route::middleware('auth')->group(function () {
             $stats['total_kantong'] = \App\Models\BloodStock::sum('quantity_bag');
             $stats['total_volume'] = \App\Models\BloodStock::sum('total_volume_ml');
             $stats['terakhir_diperbarui'] = \App\Models\BloodStock::max('last_update');
+            
+            $hospital = \App\Models\Hospital::where('user_id', $user->id)->first();
+            if ($hospital) {
+                $stats['total_permintaan'] = \App\Models\BloodRequest::where('hospital_id', $hospital->id)->count();
+                $stats['permintaan_menunggu'] = \App\Models\BloodRequest::where('hospital_id', $hospital->id)->where('status', 'Menunggu')->count();
+                $stats['permintaan_diproses'] = \App\Models\BloodRequest::where('hospital_id', $hospital->id)->where('status', 'Diproses')->count();
+                $stats['permintaan_selesai'] = \App\Models\BloodRequest::where('hospital_id', $hospital->id)->where('status', 'Selesai')->count();
+            } else {
+                $stats['total_permintaan'] = 0;
+                $stats['permintaan_menunggu'] = 0;
+                $stats['permintaan_diproses'] = 0;
+                $stats['permintaan_selesai'] = 0;
+            }
         }
 
         return view('dashboard.index', compact('stats'));
@@ -71,10 +93,17 @@ Route::middleware('auth')->group(function () {
     Route::resource('users', \App\Http\Controllers\UserController::class);
     Route::resource('donors', \App\Http\Controllers\DonorController::class)->middleware('role:admin,petugas,rumah_sakit');
     Route::resource('screenings', \App\Http\Controllers\ScreeningController::class)->middleware('role:admin,petugas,rumah_sakit');
+
     Route::resource('donations', \App\Http\Controllers\DonationController::class)->middleware('role:admin,petugas,rumah_sakit');
     Route::resource('blood-stocks', \App\Http\Controllers\BloodStockController::class)->middleware('role:admin,petugas,rumah_sakit');
     Route::resource('hospitals', \App\Http\Controllers\HospitalController::class)->middleware('role:admin,petugas,rumah_sakit');
-
+    Route::resource('blood-distributions', \App\Http\Controllers\BloodDistributionController::class)->middleware('role:admin,petugas,rumah_sakit');
+    Route::resource('notifications', \App\Http\Controllers\NotificationController::class)->middleware('role:admin,petugas,rumah_sakit');
+    Route::get('blood-requests/create', [\App\Http\Controllers\BloodRequestController::class, 'create'])->name('blood-requests.create')->middleware('auth');
+    Route::post('blood-requests', [\App\Http\Controllers\BloodRequestController::class, 'store'])->name('blood-requests.store')->middleware('auth');
+    Route::resource('blood-requests', \App\Http\Controllers\BloodRequestController::class)
+        ->except(['create', 'store'])
+        ->middleware('role:admin,petugas,rumah_sakit,rs');
     Route::get('/profile', function () {
         return view('profile.index');
     })->name('profile');

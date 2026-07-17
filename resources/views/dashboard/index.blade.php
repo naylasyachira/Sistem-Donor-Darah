@@ -253,6 +253,74 @@
                 </div>
             </div>
 
+            <!-- Total Permintaan -->
+            <div class="col-xxl-3 col-md-6 mb-4">
+                <div class="card info-card border-0 shadow-sm rounded-3 h-100">
+                    <div class="card-body p-4">
+                        <h5 class="card-title text-muted text-uppercase fs-6 mb-3">Total Permintaan</h5>
+                        <div class="d-flex align-items-center">
+                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-primary bg-opacity-10 me-3" style="width: 50px; height: 50px;">
+                                <i class="bi bi-file-earmark-text text-primary fs-3"></i>
+                            </div>
+                            <div class="ps-2">
+                                <h6 class="fs-3 fw-bold mb-0">{{ number_format($stats['total_permintaan'] ?? 0) }}</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menunggu -->
+            <div class="col-xxl-3 col-md-6 mb-4">
+                <div class="card info-card border-0 shadow-sm rounded-3 h-100">
+                    <div class="card-body p-4">
+                        <h5 class="card-title text-muted text-uppercase fs-6 mb-3">Menunggu</h5>
+                        <div class="d-flex align-items-center">
+                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-warning bg-opacity-10 me-3" style="width: 50px; height: 50px;">
+                                <i class="bi bi-hourglass-split text-warning fs-3"></i>
+                            </div>
+                            <div class="ps-2">
+                                <h6 class="fs-3 fw-bold mb-0">{{ number_format($stats['permintaan_menunggu'] ?? 0) }}</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Diproses -->
+            <div class="col-xxl-3 col-md-6 mb-4">
+                <div class="card info-card border-0 shadow-sm rounded-3 h-100">
+                    <div class="card-body p-4">
+                        <h5 class="card-title text-muted text-uppercase fs-6 mb-3">Diproses</h5>
+                        <div class="d-flex align-items-center">
+                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-info bg-opacity-10 me-3" style="width: 50px; height: 50px;">
+                                <i class="bi bi-arrow-repeat text-info fs-3"></i>
+                            </div>
+                            <div class="ps-2">
+                                <h6 class="fs-3 fw-bold mb-0">{{ number_format($stats['permintaan_diproses'] ?? 0) }}</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Selesai -->
+            <div class="col-xxl-3 col-md-6 mb-4">
+                <div class="card info-card border-0 shadow-sm rounded-3 h-100">
+                    <div class="card-body p-4">
+                        <h5 class="card-title text-muted text-uppercase fs-6 mb-3">Selesai</h5>
+                        <div class="d-flex align-items-center">
+                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-success bg-opacity-10 me-3" style="width: 50px; height: 50px;">
+                                <i class="bi bi-check-circle text-success fs-3"></i>
+                            </div>
+                            <div class="ps-2">
+                                <h6 class="fs-3 fw-bold mb-0">{{ number_format($stats['permintaan_selesai'] ?? 0) }}</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         @endif
     </div>
 </section>

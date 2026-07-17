@@ -27,9 +27,9 @@
                             <div class="col-md-8 col-lg-9">
                                 <div class="d-flex align-items-center mb-3">
                                     @if(auth()->user()->profile_photo_path)
-                                        <img src="{{ asset('storage/' . auth()->user()->profile_photo_path) }}" alt="Profile" class="rounded-circle me-3" width="80" height="80" style="object-fit: cover;">
+                                        <img src="{{ asset('storage/' . auth()->user()->profile_photo_path) }}" alt="Profile" id="profilePreviewImage" class="rounded-circle me-3" width="80" height="80" style="object-fit: cover;">
                                     @else
-                                        <img src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name) }}&background=F8D7DA&color=DC3545" alt="Profile" class="rounded-circle me-3" width="80" height="80">
+                                        <img src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name) }}&background=F8D7DA&color=DC3545" alt="Profile" id="profilePreviewImage" class="rounded-circle me-3" width="80" height="80">
                                     @endif
                                     <input name="profile_photo" type="file" class="form-control @error('profile_photo') is-invalid @enderror" id="profile_photo" accept="image/*">
                                 </div>
@@ -116,4 +116,40 @@
         </div>
     </div>
 </section>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const photoInput = document.getElementById('profile_photo');
+        const previewImage = document.getElementById('profilePreviewImage');
+        
+        if (photoInput && previewImage) {
+            const originalSrc = previewImage.src;
+            
+            photoInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                
+                if (file) {
+                    const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+                    if (!validTypes.includes(file.type)) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'File yang dipilih bukan gambar.',
+                            showConfirmButton: true,
+                            backdrop: 'rgba(0,0,0,0.4)'
+                        });
+                        photoInput.value = ''; // Reset file input
+                        previewImage.src = originalSrc; // Reset image preview
+                        return;
+                    }
+                    // Show preview
+                    previewImage.src = URL.createObjectURL(file);
+                } else {
+                    // Revert to original if cancelled
+                    previewImage.src = originalSrc;
+                }
+            });
+        }
+    });
+</script>
 @endsection

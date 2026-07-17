@@ -27,17 +27,23 @@
                                     <label for="yourEmail" class="form-label">Email</label>
                                     <div class="input-group has-validation">
                                         <span class="input-group-text" id="inputGroupPrepend">@</span>
-                                        <input type="email" name="email" class="form-control" id="yourEmail" required>
+                                        <input type="text" name="email" class="form-control @error('email') is-invalid @enderror" id="yourEmail" value="{{ old('email') }}">
+                                        @error('email')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
 
                                 <div class="col-12 mt-3">
                                     <label for="yourPassword" class="form-label">Password</label>
-                                    <div class="input-group">
-                                        <input type="password" name="password" class="form-control" id="yourPassword" required>
-                                        <span class="input-group-text bg-white" id="togglePassword" style="cursor: pointer;">
+                                    <div class="input-group has-validation">
+                                        <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" id="yourPassword">
+                                        <span class="input-group-text bg-white" id="togglePassword" style="cursor: pointer; @error('password') border-color: #dc3545; @enderror">
                                             <i class="bi bi-eye" id="eyeIcon"></i>
                                         </span>
+                                        @error('password')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
 
